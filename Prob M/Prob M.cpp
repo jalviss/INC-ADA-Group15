@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 int main() {
     long long int n, m, k;
@@ -7,21 +8,37 @@ int main() {
     
     if (m * n == k) {
         printf("0\n");
-        return 0;
     }
-    if (k % m == 0 || k % n == 0) {
+    else if (k % n == 0 || k % m == 0) {
         printf("1\n");
-        return 0;
     }
-    for (long long int j = 1; j < m; j++) {
-        long long int temp = k - j * n;
-        if ((temp < 0 && temp % j == 0) || (temp > 0 && temp % (m - j) == 0)) {
-            printf("2\n");
-            return 0;
+    else {
+        if (m > n){
+            long long int temp = m;
+            m = n;
+            n = temp;
+        }
+
+        int flag = 0;
+
+        for(long long int i = 1; i < n; i++){
+            if(k % i == 0 && floor(k / i) < m){
+                printf("2\n");
+                flag = 1;
+                break;
+            }
+            long long int temp = n * m - k;   
+            if(temp % i == 0 && floor(temp / i) < m){
+                printf("2\n");
+                flag = 1;
+                break;
+            }
+        }
+
+        if(flag == 0){
+            printf("3\n");
         }
     }
-    
-    printf("3\n");
     
     return 0;
 }
